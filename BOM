@@ -87,3 +87,30 @@ WHERE
     AND a."IDNRK" = 'YourFGMaterialNumber' -- Replace with your actual FG Material number
 
   
+  
+  
+RM FG WIP
+
+SELECT
+    CASE
+        WHEN a."STLTY" = '1' THEN 'Raw Material'
+        WHEN a."STLTY" = '2' THEN 'Finished Good'
+        WHEN a."STLTY" = '3' THEN 'Work-in-Process'
+        ELSE 'Unknown'
+    END AS "Material Type",
+    a."IDNRK" AS "Material Number",
+    b."MAKTX" AS "Material Description",
+    a."MEINS" AS "Unit of Measure"
+FROM
+    "STPO" AS a
+JOIN
+    "MARA" AS b ON a."IDNRK" = b."MATNR"
+WHERE
+    a."STLTY" IN ('1', '2', '3') -- Filter for RM, FG, and WIP materials
+
+
+
+  
+  
+  
+
