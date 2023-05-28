@@ -57,3 +57,33 @@ FROM
   INNER JOIN STAS T3 ON T1.STLNR = T3.STLNR AND T1.STLKN = T3.STLKN
 WHERE 
   T1.WERKS = 'YOUR PLANT CODE'
+  
+  
+  
+  
+  
+  SELECT
+    a."STLNR" AS "BOM Number",
+    a."STLAL" AS "BOM Usage",
+    a."STLTY" AS "BOM Type",
+    a."WERKS" AS "Plant",
+    a."IDNRK" AS "FG Material Number",
+    a."MENGE" AS "FG Quantity",
+    a."MEINS" AS "FG Unit of Measure",
+    b."IDNRK" AS "RM Material Number",
+    b."MENGE" AS "RM Quantity",
+    b."MEINS" AS "RM Unit of Measure"
+FROM
+    "STPO" AS a
+JOIN
+    "STKO" AS c ON a."STLNR" = c."STLNR" AND a."STLAL" = c."STLAL" AND a."STLTY" = c."STLTY"
+JOIN
+    "STAS" AS d ON a."STLNR" = d."STLNR" AND a."STLAL" = d."STLAL" AND a."STLTY" = d."STLTY" AND a."POSNR" = d."POSNR"
+JOIN
+    "MARA" AS e ON a."IDNRK" = e."MATNR"
+WHERE
+    a."STLTY" = '1' -- BOM Type for Production BOM
+    AND a."WERKS" = 'YourPlantCode' -- Replace with your actual Plant code
+    AND a."IDNRK" = 'YourFGMaterialNumber' -- Replace with your actual FG Material number
+
+  
